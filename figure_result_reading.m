@@ -1,0 +1,392 @@
+%subplot(2,2,1)
+
+% scatplot(all_q,log10(all_tau_off),'circles')
+% result = load('all_result_mESC');
+result = load('all_result');
+a = result.all_q;
+b = result.all_tau_off;
+c = result.all_tau_on;
+d = result.all_bs;
+o = log10(d);
+e = result.all_bf;
+p = log10(e);
+m = result.memory_index;
+n = result.all_koff;
+% 
+% MEF_feature_result = load('mESC_feature_result');
+MEF_feature_result = load('MEF_feature_result');
+f = MEF_feature_result.data_mean;
+g = MEF_feature_result.data_var;
+h = MEF_feature_result.data_cv2;
+i = MEF_feature_result.data_fano;
+j = MEF_feature_result.data_sk;
+k = MEF_feature_result.data_kt;
+l = MEF_feature_result.data_bc;
+
+% figure
+% scatplot(m,i,'circles')
+% xlabel('memory index')
+% ylabel('mean ')
+
+f1 = figure;
+[Y1,I1] = sort(o);
+[Y2,I2] = sort(p);
+x1 = [];
+x2 = [];
+x3 = [];
+x4 = [];
+x5 = [];
+
+y1 = [];
+y2 = [];
+y3 = [];
+y4 = [];
+
+for s = I1
+    if o(s) <= 0.5
+        x1(end + 1) = h(s);
+    end
+end
+
+for s = I1
+    if o(s) <= 1 && o(s) > 0.5
+        x2(end + 1) = h(s);
+    end
+end
+
+for s = I1
+    if o(s) <= 1.5 && o(s) > 1
+        x3(end + 1) = h(s);
+    end
+end
+
+for s = I1
+    if o(s) <= 2 && o(s) > 1.5
+        x4(end + 1) = h(s);
+    end
+end
+
+for s = I1
+    if o(s) > 2
+        x5(end + 1) = h(s);
+    end
+end
+
+
+for t = I2
+    if p(t) <= -1 
+        y1(end + 1) = h(t);
+    end
+end
+
+for t = I2
+    if p(t) <= -0.5 && p(t) > -1
+        y2(end + 1) = h(t);
+    end
+end
+
+for t = I2
+    if p(t) <= 0 && p(t) > -0.5
+        y3(end + 1) = h(t);
+    end
+end
+
+for t = I2
+    if p(t) > 0
+        y4(end + 1) = h(t);
+    end
+end
+% 
+% f1 = figure;%log10bs---cv2
+% cv2 = [x1,x2,x3,x4,x5];
+% mean_cv2 = [mean(x1),mean(x2),mean(x3),mean(x4),mean(x5)];
+% cv2_tmp = [ones(size(x1)),2*ones(size(x2)),3*ones(size(x3)),4*ones(size(x4)),5*ones(size(x5))];
+% h = boxplot(cv2,cv2_tmp,'Symbol','.','Color','k','Whisker',3); %whisker可以决定异常值显示的多少
+% ylabel("cv^2","Fontname","Times New Roman");
+% 
+% % mycolor = ['#00837E','#4DBBD4','#00837E','#4DBBD4','#00837E'];
+% % mycolor = [255,240,245;123,104,238;152,251,152;211,160,152;255,222,173] ./255;
+% set(h,'LineWidth',1.5)
+% mycolor = [251,202,197;185,230,249;251,202,197;185,230,249;251,202,197] ./255;%RGB颜色表
+% boxobj = findobj(gca,'Tag','Box');
+% % outliersobj = findobj(gca,'Tag','Outliers');
+% % lineobj = findobj('gca','Tag','Median');
+% 
+% for i = 1:5
+%     patch(get(boxobj(i),'XData'),get(boxobj(i),'YData'),mycolor(i,:),'FaceAlpha',0.5,'LineWidth',1.1);
+% end
+% hold on;
+% set(gca,'FontSize',12,'Fontname', 'Times News Roman');
+% 
+% hold on;
+% plot(mean_cv2(1),'bo','Marker','o','Color','k','LineWidth',1.5)
+% hold on;
+% plot(2*ones(size(x2)),mean_cv2(2),'bo','Marker','o','Color','k','LineWidth',1.5)
+% hold on;
+% plot(3*ones(size(x3)),mean_cv2(3),'bo','Marker','o','Color','k','LineWidth',1.5)
+% hold on;
+% plot(4*ones(size(x4)),mean_cv2(4),'bo','Marker','o','Color','k','LineWidth',1.5)
+% hold on;
+% plot(5*ones(size(x5)),mean_cv2(5),'bo','Marker','o','Color','k','LineWidth',1.5)
+% hold on;
+% 
+% 
+f2 = figure;%log10bf--cv2
+cv2 = [y1,y2,y3,y4];
+mean_cv2 = [mean(y1),mean(y2),mean(y3),mean(y4)];
+cv2_tmp = [ones(size(y1)),2*ones(size(y2)),3*ones(size(y3)),4*ones(size(y4))];
+h = boxplot(cv2,cv2_tmp,'Symbol','.','Color','k','Whisker',3); %whisker可以决定异常值显示的多少
+ylabel("cv^2","Fontname","Times New Roman");
+
+% mycolor = ['#00837E','#4DBBD4','#00837E','#4DBBD4','#00837E'];
+% mycolor = [255,240,245;123,104,238;152,251,152;211,160,152;255,222,173] ./255;
+set(h,'LineWidth',1.5)
+mycolor = [251,202,197;185,230,249;251,202,197;185,230,249] ./255;%RGB颜色表
+boxobj = findobj(gca,'Tag','Box');
+% outliersobj = findobj(gca,'Tag','Outliers');
+% lineobj = findobj('gca','Tag','Median');
+
+for i = 1:4
+    patch(get(boxobj(i),'XData'),get(boxobj(i),'YData'),mycolor(i,:),'FaceAlpha',0.5,'LineWidth',1.1);
+end
+hold on;
+set(gca,'FontSize',12,'Fontname', 'Times News Roman');
+
+hold on;
+plot(mean_cv2(1),'bo','Marker','o','Color','k','LineWidth',1.5)
+hold on;
+plot(2*ones(size(y2)),mean_cv2(2),'bo','Marker','o','Color','k','LineWidth',1.5)
+hold on;
+plot(3*ones(size(y3)),mean_cv2(3),'bo','Marker','o','Color','k','LineWidth',1.5)
+hold on;
+plot(4*ones(size(y4)),mean_cv2(4),'bo','Marker','o','Color','k','LineWidth',1.5)
+hold on;
+set(gca,'linewidth',1.5)
+set(gca,'FontWeight','bold')
+set(gca,'FontSize',10);
+
+% 
+% % f1 = figure;
+% % 
+% % [Y1,I1] = sort(o);
+% % [Y2,I2] = sort(p);
+% % x1 = [];
+% % x2 = [];
+% % x3 = [];
+% % x4 = [];
+% % x5 = [];
+% % 
+% % y1 = [];
+% % y2 = [];
+% % y3 = [];
+% % y4 = [];
+% % 
+% % for s = I1
+% %     if o(s) <= 0.5
+% %         x1(end + 1) = l(s);
+% %     end
+% % end
+% % 
+% % for s = I1
+% %     if o(s) <= 1 && o(s) > 0.5
+% %         x2(end + 1) = l(s);
+% %     end
+% % end
+% % 
+% % for s = I1
+% %     if o(s) <= 1.5 && o(s) > 1
+% %         x3(end + 1) = l(s);
+% %     end
+% % end
+% % 
+% % for s = I1
+% %     if o(s) <= 2 && o(s) > 1.5
+% %         x4(end + 1) = l(s);
+% %     end
+% % end
+% % 
+% % for s = I1
+% %     if o(s) > 2
+% %         x5(end + 1) = l(s);
+% %     end
+% % end
+% % 
+% % 
+% % for t = I2
+% %     if p(t) <= -1 
+% %         y1(end + 1) = l(t);
+% %     end
+% % end
+% % 
+% % for t = I2
+% %     if p(t) <= -0.5 && p(t) > -1
+% %         y2(end + 1) = l(t);
+% %     end
+% % end
+% % 
+% % for t = I2
+% %     if p(t) <= 0 && p(t) > -0.5
+% %         y3(end + 1) = l(t);
+% %     end
+% % end
+% % 
+% % for t = I2
+% %     if p(t) > 0
+% %         y4(end + 1) = l(t);
+% %     end
+% % end
+% % 
+% % f1 = figure;%log10bs---bc
+% % bc = [x1,x2,x3,x4,x5];
+% % mean_bc = [mean(x1),mean(x2),mean(x3),mean(x4),mean(x5)];
+% % bc_tmp = [ones(size(x1)),2*ones(size(x2)),3*ones(size(x3)),4*ones(size(x4)),5*ones(size(x5))];
+% % h = boxplot(bc,bc_tmp,'Symbol','.','Color','k','Whisker',3); %whisker可以决定异常值显示的多少
+% % ylabel("Bimodality coefficient","Fontname","Times New Roman");
+% % % xlabel("The Range of bs","Fontname","Times New Roman");
+% % 
+% % % mycolor = ['#00837E','#4DBBD4','#00837E','#4DBBD4','#00837E'];
+% % % mycolor = [255,240,245;123,104,238;152,251,152;211,160,152;255,222,173] ./255;
+% % set(h,'LineWidth',1.5)
+% % mycolor = [251,202,197;185,230,249;251,202,197;185,230,249;251,202,197] ./255;%RGB颜色表
+% % boxobj = findobj(gca,'Tag','Box');
+% % % outliersobj = findobj(gca,'Tag','Outliers');
+% % % lineobj = findobj('gca','Tag','Median');
+% % 
+% % for i = 1:5
+% %     patch(get(boxobj(i),'XData'),get(boxobj(i),'YData'),mycolor(i,:),'FaceAlpha',0.5,'LineWidth',1.1);
+% % end
+% % hold on;
+% % set(gca,'FontSize',12,'Fontname', 'Times News Roman');
+% % 
+% % hold on;
+% % plot(mean_bc(1),'bo','Marker','o','Color','k','LineWidth',1.5)
+% % hold on;
+% % plot(2*ones(size(x2)),mean_bc(2),'bo','Marker','o','Color','k','LineWidth',1.5)
+% % hold on;
+% % plot(3*ones(size(x3)),mean_bc(3),'bo','Marker','o','Color','k','LineWidth',1.5)
+% % hold on;
+% % plot(4*ones(size(x4)),mean_bc(4),'bo','Marker','o','Color','k','LineWidth',1.5)
+% % hold on;
+% % plot(5*ones(size(x5)),mean_bc(5),'bo','Marker','o','Color','k','LineWidth',1.5)
+% % hold on;
+% % set(gca,'linewidth',1.5)
+% % set(gca,'FontWeight','bold')
+% % set(gca,'FontSize',10);
+% % 
+% f2 = figure;%log10bf--bc
+% bc = [y1,y2,y3,y4];
+% mean_bc = [mean(y1),mean(y2),mean(y3),mean(y4)];
+% bc_tmp = [ones(size(y1)),2*ones(size(y2)),3*ones(size(y3)),4*ones(size(y4))];
+% h = boxplot(bc,bc_tmp,'Symbol','.','Color','k','Whisker',3); %whisker可以决定异常值显示的多少
+% ylabel("bc","Fontname","Times New Roman");
+% 
+% % mycolor = ['#00837E','#4DBBD4','#00837E','#4DBBD4','#00837E'];
+% % mycolor = [255,240,245;123,104,238;152,251,152;211,160,152;255,222,173] ./255;
+% set(h,'LineWidth',1.5)
+% mycolor = [251,202,197;185,230,249;251,202,197;185,230,249] ./255;%RGB颜色表
+% boxobj = findobj(gca,'Tag','Box');
+% % outliersobj = findobj(gca,'Tag','Outliers');
+% % lineobj = findobj('gca','Tag','Median');
+% 
+% for i = 1:4
+%     patch(get(boxobj(i),'XData'),get(boxobj(i),'YData'),mycolor(i,:),'FaceAlpha',0.5,'LineWidth',1.1);
+% end
+% hold on;
+% set(gca,'FontSize',12,'Fontname', 'Times News Roman');
+% 
+% hold on;
+% plot(mean_bc(1),'bo','Marker','o','Color','k','LineWidth',1.5)
+% hold on;
+% plot(2*ones(size(y2)),mean_bc(2),'bo','Marker','o','Color','k','LineWidth',1.5)
+% hold on;
+% plot(3*ones(size(y3)),mean_bc(3),'bo','Marker','o','Color','k','LineWidth',1.5)
+% hold on;
+% plot(4*ones(size(y4)),mean_bc(4),'bo','Marker','o','Color','k','LineWidth',1.5)
+% hold on;
+
+
+
+% scatplot(m,l,'circles')
+% xlabel('memory index')
+% ylabel('bimodality coefficient ')
+% % scatter(m,l,30,log10(f),'filled')
+% % xlabel('memory index')
+% % ylabel('bimodality coefficient ')
+% % h = colorbar;
+% % set(get(h,'label'),'string','log10(mean)')
+
+% scatplot(n,l,'circles')
+% xlabel('koff memory index')
+% ylabel('bimodality coefficient ')
+
+
+% % % % % scatplot(a,log10(b),'circles')
+% % % % % xlabel('q')
+% % % % % ylabel('log(<\tau_{off}>)')
+% % % % 
+% % % % 
+% % % % % subplot(2,2,2)
+% % % % % scatplot(a,log10(c),'circles')
+% % % % % xlabel('q')
+% % % % % ylabel('log(<\tau_{on}>)')
+% % % % 
+% % % % % subplot(2,2,3)
+% % % % % scatplot(a,log10(d),'circles')
+% % % % % xlabel('q')
+% % % % % ylabel('log(bs)')
+% % % % 
+% % % % % subplot(2,2,4)
+% % % % % scatplot(a,log10(e),'circles')
+% % % % % xlabel('q')
+% % % % % ylabel('log(bf)')
+% 
+% f2 = figure;
+% % subplot(1,2,2)
+% % % scatplot(log10(b),log10(c),'circles')
+% % % xlabel('log(<\tau_{off}>)')
+% % % ylabel('log(<\tau_{on}>)')
+% % % subplot(1,2,1)
+% % scatter(log10(b),log10(c),30,log10(f),'filled')
+% % box on
+% % xlabel('log(<\tau_{off}>)')
+% % ylabel('log(<\tau_{on}>)')
+% % h = colorbar;
+% % set(gca,'linewidth',1.5)
+% % set(gca,'FontWeight','bold')
+% % set(gca,'FontSize',10);
+
+% % 
+% % subplot(1,2,1)
+% % % scatplot(log10(e),log10(d),'circles')
+% % % xlabel('log(bf)')
+% % % ylabel('log(bs)')
+% % scatter(log10(e),log10(d),30,log10(f),'filled')
+% % box on
+% % xlabel('log(bf)')
+% % ylabel('log(bs)')
+% % h = colorbar;
+% % set(get(h,'label'),'string','log10(mean)')
+% % set(gca,'linewidth',1.5)
+% % set(gca,'FontWeight','bold')
+% % set(gca,'FontSize',10);
+% 
+% f3 = figure;
+% subplot(2,2,1)
+% scatplot(log10(d),h,'circles')
+% xlabel('log(bs)')
+% ylabel('cv^2')
+% 
+% subplot(2,2,2)
+% scatplot(log10(d),l,'circles')
+% xlabel('log(bs)')
+% ylabel('bc')
+% 
+% subplot(2,2,3)
+% scatplot(log10(e),h,'circles')
+% xlabel('log(bf)')
+% ylabel('cv^2')
+% 
+% subplot(2,2,4)
+% scatplot(log10(e),l,'circles')
+% xlabel('log(bf)')
+% ylabel('bc')

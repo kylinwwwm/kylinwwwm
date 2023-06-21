@@ -1,0 +1,125 @@
+
+color=[[53 94 103]/255;[246 178 107]/255];
+FaceColor = {'#00837E','#4DBBD4'};
+
+% gene_number = 10;
+% gene_number = 52;
+gene_number = 1896;
+% gene_number = 1387;
+% gene_number = 464;
+f1 = figure;
+box on;
+% data1 = csvread('E:\code\1_test\data\Mbln2.csv');
+data1 = csvread('E:\code\1_test\data\MEF_QC_all.csv');
+x1 = data1(gene_number,:);
+x1(x1 == -1) = [];
+% histogram(x1)
+histogram(x1,'normalization','pdf','EdgeColor','none','FaceColor',FaceColor{2}) 
+xlabel('mRNA','FontName','Times New Rome','FontSize',10)
+
+ylabel('PDF','FontName','黑体','FontSize',10)
+set(gca,'linewidth',1.5)
+set(gca,'FontWeight','bold')
+set(gca,'FontName','Times New Rome','FontSize',10);
+t=0:0:0;
+set(gca,'xtick',t)
+set(gca,'ytick',t)
+% % hold on;
+% % num_bins = ceil(max(x1));
+% % % % 
+% % [counts, edges] = histcounts(x1, num_bins);
+% % bin_edges=edges(2) - edges(1);
+% % probs = counts / sum(counts);
+% % centers = edges(1:end-1) + bin_edges/2;
+% % %histogram(x1,'normalization','pdf','EdgeColor','none','FaceColor',FaceColor{2})
+% % 
+% % xlabel('mRNA');
+% % ylabel('PDF');
+% % 
+% % xq1 = 0.3:0.01:max(x1);
+% % 
+% % vq = interp1(edges(2:end), probs, xq1, 'spline');
+% % temp = find(vq >= 0);
+% % vq = vq(temp);
+% % xq1 = xq1(temp);
+% % hold on;
+% % plot(xq1, vq, 'Color',color(1,:), 'LineWidth', 2);
+% % legend( 'True' , 'Interpolation curve');
+% % set(gca,'xlim',[0 30],'xtick',[0:10:30],'ylim',[0 0.3],'ytick',[0:0.1:0.3]);
+% % % % 
+% % % % 
+% % % % 
+% % % % 
+% % %该基因推断出的参数的模拟数据
+% % f2 = figure;
+% % filename = sprintf('E:\\code\\1_test\\results1\\results_MEF\\result_gene_%d',gene_number);
+% % result_data = load(filename);
+% % result = getfield(result_data,'result');
+% % last_iteration_result = result(:,end);%结果中的最后一列
+% % a = last_iteration_result(1);
+% % dist = cellfun(@(c) c.dist,last_iteration_result);
+% % [min_dist,min_ind] = min(dist);
+% % param_vector = last_iteration_result(min_ind);
+% % param_true.kon1 = cellfun(@(c) c.kon1,param_vector);
+% % param_true.kon2 = cellfun(@(c) c.kon2,param_vector);
+% % param_true.ron1 = cellfun(@(c) c.ron1,param_vector);
+% % param_true.ron2 = cellfun(@(c) c.ron2,param_vector);
+% % param_true.koff = cellfun(@(c) c.koff,param_vector);
+% % param_true.roff = cellfun(@(c) c.roff,param_vector);
+% % param_true.mu = cellfun(@(c) c.mu,param_vector);
+% % param_true.q = cellfun(@(c) c.q,param_vector);
+% % param_true.delta = 1;
+% % param_true.x0 = [1,0,0];
+% % param_true.tottime = 2000;
+% % 
+% % [x,t] = simulQM(param_true);
+% % tq = 1500:0.1:param_true.tottime;
+% % xq = interp1(t,x(:,3),tq,'previous');%插值  函数关系由t,x(:,3)给出，插值tq对应的xq  x(:,3)表示x中的第三个元素，也就是mRNA分子数                                           
+% % data = xq;
+% % time_series = cat(2,t,x);
+% % time_series2 = cat(1,tq,xq);
+% % time_series2 = time_series2';
+% % statis_data = statisData(data);
+% % 
+% % histogram(data,[min(x1):1:max(x1)],'normalization','pdf','EdgeColor','none','FaceColor',FaceColor{2})%横坐标表示数据的取值，纵坐标表示该数据出现的概率
+% % xlabel('mRNA')
+% % ylabel('PDF')
+% % set(gca,'linewidth',1.5)
+% % set(gca,'FontWeight','bold')
+% % set(gca,'FontSize',10);
+% % 
+% % hold on
+% % 
+% % num_bins = ceil(max(data));
+% % 
+% % [counts, edges] = histcounts(data, num_bins);
+% % bin_edges=edges(2) - edges(1);
+% % probs = counts / sum(counts);
+% % centers=edges(1:end-1) + bin_edges/2;
+% % 
+% % xlabel('mRNA');
+% % ylabel('PDF');
+% % 
+% % xq = 0.3:0.01:max(data);
+% % 
+% % tq = interp1(edges(2:end), probs, xq, 'spline');
+% % temp = find(tq >= 0);
+% % tq = tq(temp);
+% % xq = xq(temp);
+% % hold on;
+% % plot(xq, tq,'Color',color(2,:), 'LineWidth', 2);
+% % legend('Model' , 'Interpolation curve');
+% % set(gca,'xlim',[0 30],'xtick',[0:10:30],'ylim',[0 0.3],'ytick',[0:0.1:0.3]);
+% % 
+% % f3 = figure;
+% % 
+% % plot(xq1, vq,'Color',color(1,:), 'LineWidth', 2);
+% % hold on;
+% % plot(xq, tq,'Color',color(2,:), 'LineWidth', 2);
+% % legend('True', 'Model');
+% % xlabel('mRNA');
+% % ylabel('PDF');
+% % set(gca,'linewidth',1.5)
+% % set(gca,'FontWeight','bold')
+% % set(gca,'FontSize',10);
+% % % % 
